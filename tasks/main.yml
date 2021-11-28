@@ -35,6 +35,7 @@
   template:
     src: configuration.yaml.j2
     dest: /opt/zigbee2mqtt/data/configuration.yaml
+  notify: restart zigbee2mqtt
 
 - name: Define the default service Docker volumes
   set_fact:

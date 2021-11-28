@@ -11,7 +11,7 @@ services:
 {% endif %}
     restart: always
     ports:
-      - '8080:8080' # Frontend Port
+      - '{{ z2mq_frontend_port }}:{{ z2mq_frontend_port }}' # Frontend Port
 {% if z2mq_network_name %}
     networks:
       - {{ z2mq_network_name }}

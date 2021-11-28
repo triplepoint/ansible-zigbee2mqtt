@@ -9,13 +9,16 @@ mqtt:
   # MQTT base topic for zigbee2mqtt MQTT messages
   base_topic: zigbee2mqtt
   server: 'mqtt://{{ z2mq_mqtt_host }}'
-  {% if z2mq_mqtt_user_name %}
+{% if z2mq_mqtt_user_name %}
   user: '{{ z2mq_mqtt_user_name }}'
-  {% endif %}
-  {% if z2mq_mqtt_password %}
+{% endif %}
+{% if z2mq_mqtt_password %}
   password: '{{ z2mq_mqtt_password }}'
-  {% endif %}
+{% endif %}
 
 # Serial settings
 serial:
   port: /dev/ttyACM0
+
+frontend:
+  port: {{ z2mq_frontend_port }}

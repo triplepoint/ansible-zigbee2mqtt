@@ -42,3 +42,6 @@ z2mq_allow_new_devices: "true"
 
 # Enable Home Assistant integration (MQTT discovery)
 z2mq_enable_homeassistant: "false"
+
+# Which port should the GUI frontend service use?
+z2mq_frontend_port: 8080
