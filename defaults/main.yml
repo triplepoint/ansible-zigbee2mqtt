@@ -1,0 +1,44 @@
+---
+# The name of the user and group to be created on the host machine,
+# to own the configuration files for this service.
+z2mq_exec_user: z2mq-exec
+
+# The user ID and group ID to assign to the above user.  If you find that This
+# UID or GID already exists on your host, adjust this to an unused value.
+z2mq_exec_user_and_group_id: "1996"
+
+# The version tag of the `koenkk/zigbee2mqtt` docker hub image.
+z2mq_docker_image_version: "latest"
+
+# A key/value set of environment variables and their values, which will be
+# set on the docker container.
+z2mq_environment_variables: {
+  TZ=ETC/UTC
+}
+
+# If set to a string, the created Docker container will attach to a
+# pre-existing default Docker network, instead of creating its own.
+z2mq_network_name: ""
+
+# Labels to put on the application containers
+z2mq_container_labels: []
+
+# The path to the serial device representing the ZigBee dongle.
+# Do not use /dev/ttyUSBX serial devices, as those mappings can change over time.
+# Instead, use the /dev/serial/by-id/X serial device for your device.
+z2mq_zigbee_dongle_serial_device: ""
+
+# The host name where the MQTT broker listens
+z2mq_mqtt_host: "localhost"
+
+# The user name for zigbee2mqtt, on the MQTT broker (leave empty if not required)
+z2mq_mqtt_user_name: ""
+
+# The password for zigbee2mqtt, on the MQTT broker (leave empty if not required)
+z2mq_mqtt_password: ""
+
+# Permit new devices to join the network
+z2mq_allow_new_devices: "true"
+
+# Enable Home Assistant integration (MQTT discovery)
+z2mq_enable_homeassistant: "false"

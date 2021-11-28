@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include ansible-zigbee2mqtt"
+      include_role:
+        name: "ansible-zigbee2mqtt"

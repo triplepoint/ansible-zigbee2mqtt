@@ -1,0 +1,68 @@
+---
+- name: Ensure Docker-related Python packages are present
+  pip:
+    name:
+      - docker
+      - docker-compose
+
+- name: Ensure the admin group is present
+  group:
+    name: "{{ z2mq_exec_user }}"
+    state: present
+    gid: "{{ z2mq_exec_user_and_group_id }}"
+    system: yes
+
+- name: Ensure the admin user is present
+  user:
+    name: "{{ z2mq_exec_user }}"
+    state: present
+    uid: "{{ z2mq_exec_user_and_group_id }}"
+    group: "{{ z2mq_exec_user }}"
+    create_home: no
+    system: yes
+    shell: "/usr/sbin/nologin"
+
+- name: Ensure the mounted volume directories are present
+  file:
+    state: directory
+    path: "{{ item }}"
+    group: "{{ z2mq_exec_user }}"
+    owner: "{{ z2mq_exec_user }}"
+  with_items:
+    - /opt/zigbee2mqtt/data
+
+- name: Ensure that the Zigbee2MQTT config file is in place
+  template:
+    src: configuration.yaml.j2
+    dest: /opt/zigbee2mqtt/data/configuration.yaml
+
+- name: Define the default service Docker volumes
+  set_fact:
+    _z2mq_docker_volumes:
+      - "/opt/zigbee2mqtt/data:/app/data"
+      - "/run/udev:/run/udev:ro"
+
+- name: Append any additional environment variables
+  set_fact:
+    _z2mq_docker_env_vars:
+      PGID: "{{ z2mq_exec_user_and_group_id }}"
+      PUID: "{{ z2mq_exec_user_and_group_id }}"
+
+- name: Append any additional environment variables
+  set_fact:
+    _z2mq_docker_env_vars: "{{ _z2mq_docker_env_vars | combine(z2mq_environment_variables) }}"
+
+- name: Ensure the docker-compose template directory exists
+  file:
+    state: directory
+    path: "/opt/ansible-docker-compose/zigbee2mqtt"
+
+- name: Ensure this service's docker-compose template is present
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/ansible-docker-compose/zigbee2mqtt/docker-compose.yml
+
+- name: Ensure the service container(s) is/are started
+  docker_compose:
+    project_src: /opt/ansible-docker-compose/zigbee2mqtt
+    pull: yes

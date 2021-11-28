@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:{{ z2mq_docker_image_version }}
+    container_name: zigbee2mqtt
+{% if z2mq_container_labels %}
+    labels:
+{% for label in z2mq_container_labels %}
+      - {{ label }}
+{% endfor %}
+{% endif %}
+    restart: always
+    ports:
+      - '8080:8080' # Frontend Port
+{% if z2mq_network_name %}
+    networks:
+      - {{ z2mq_network_name }}
+{% endif %}
+    devices:
+     - "{{ z2mq_zigbee_dongle_serial_device }}:/dev/ttyACM0"
+{% if _z2mq_docker_volumes %}
+    volumes:
+{% for vol in _z2mq_docker_volumes %}
+      - {{ vol }}
+{% endfor %}
+{% endif %}
+{% if _z2mq_docker_env_vars %}
+    environment:
+{% for k, v in _z2mq_docker_env_vars.items() %}
+      - {{ k }}={{ v }}
+{% endfor %}
+{% endif %}
+{% if z2mq_network_name %}
+networks:
+  {{ z2mq_network_name }}:
+    external: true
+{% endif %}

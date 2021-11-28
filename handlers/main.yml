@@ -1,0 +1,6 @@
+---
+- name: restart zigbee2mqtt
+  docker_compose:
+    project_src: /opt/ansible-docker-compose/zigbee2mqtt
+    restarted: yes
+    pull: yes
