@@ -57,6 +57,7 @@
   file:
     state: directory
     path: "/opt/ansible-docker-compose/zigbee2mqtt"
+    mode: 0755
 
 - name: Ensure this service's docker-compose template is present
   template:
