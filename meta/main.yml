@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   role_name: zigbee2mqtt
+  namespace: triplepoint
   author: Jonathan Hanson
   description: The ZigBee2MQTT ZigBee network controller service
   license: MIT
