@@ -3,15 +3,8 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-[dev-packages]
-pylint = "*"
-
 [packages]
-ansible-lint = "*"
-flake8 = "*"
-molecule = {extras = ["docker"],version = "*"}
-testinfra = "*"
-yamllint = "*"
+molecule = {extras = ["docker", "lint", "test"], version = "*"}
 
 [requires]
 python_version = "3.9"
